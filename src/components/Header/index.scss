@@ -1,0 +1,20 @@
+.header {
+    background: #fff;
+    box-shadow: 0 2px 8px #f0f1f2;
+
+    .header-cover {
+        width: 960px;
+        margin: auto;
+
+        .header__menu {
+            display: flex;
+
+            .menu__item {
+                height: 70px;
+                padding: 0px 30px;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}

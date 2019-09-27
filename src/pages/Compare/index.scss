@@ -1,0 +1,28 @@
+.compare-page {
+    .files-uploader {
+        overflow: hidden;
+        transition: 0.3s ease;
+
+        &.closed {
+            height: 0px;
+        }
+    }
+
+    .statistic {
+
+        & > div {
+            display: grid;
+            grid-template-columns: 200px 1fr 1fr;
+            padding: 0px;
+
+            .column {
+                padding: 10px;
+            }
+        }
+    }
+
+    .send-btn {
+        text-align: center;
+        padding: 25px;
+    }
+} 
