@@ -209,8 +209,16 @@ class ComparePage extends Component {
                 <TabPane tab="Общая информация" key="1">
                   <Table dataSource={this.state.result.docs} columns={this.state.result.columns} />
                 </TabPane>
-                <TabPane tab="Обнаруженные зависемости" key="2">
-                  <Table dataSource={this.state.result.docs} columns={this.state.result.columns} />
+                <TabPane tab="Обнаруженные зависимости" key="2">
+                  <Table dataSource={this.state.result.usedDependencies} columns={[{
+                      title: 'Зависимость',
+                      dataIndex: "title",
+                      key: "title"
+                  }, {
+                      title: 'Источник',
+                      dataIndex: "source",
+                      key: "source"
+                  }]} />
                 </TabPane>
               </Tabs>
             </div>
