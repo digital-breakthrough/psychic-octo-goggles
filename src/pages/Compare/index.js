@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Upload, Icon, message, Button, Table } from 'antd';
+import { Upload, Icon, message, Button, Table, Statistic, Row, Col, Tabs } from 'antd';
 import axios from "axios"
 
 import "./index.scss";
 
 import { Doughnut } from 'react-chartjs-2';
 
+const { TabPane } = Tabs;
 const { Dragger } = Upload;
 
 const props = {
@@ -27,7 +28,9 @@ class ComparePage extends Component {
     result: {
       persent: 0,
       docs: [],
-      columns: []
+      columns: [],
+      equalRows: 0,
+      usedDependencies: []
     }
   }
 
@@ -97,7 +100,9 @@ class ComparePage extends Component {
                 result: {
                   percent: res.data.percent,
                   docs: res.data.docs,
-                  columns: res.data.columns
+                  columns: res.data.columns,
+                  equalRows: res.data.equalRows,
+                  usedDependencies: res.data.usedDependencies
                 }
               });
               message.success(`The comparison is successful`);
@@ -122,7 +127,7 @@ class ComparePage extends Component {
             <p className="ant-upload-hint">
               Файл содержание которого будет проверяться
             </p>
-            <span className={`upload-file-status ${this.state.fileForChecking ? "active": ""}`}>
+            <span className={`upload-file-status ${this.state.fileForChecking ? "active" : ""}`}>
               <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             </span>
           </Dragger>
@@ -136,7 +141,7 @@ class ComparePage extends Component {
             <p className="ant-upload-hint">
               Файл, который будет служить исходной кодовой базой
             </p>
-            <span className={`upload-file-status ${this.state.existingCodeBase ? "active": ""}`}>
+            <span className={`upload-file-status ${this.state.existingCodeBase ? "active" : ""}`}>
               <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
             </span>
           </Dragger>
@@ -188,7 +193,26 @@ class ComparePage extends Component {
                 }} />
             </div>
             <div className="statistic">
-              <Table dataSource={this.state.result.docs} columns={this.state.result.columns} />
+              <Row gutter={16}>
+                <Col className="text-center" span={12}>
+                  <Statistic title="Обнаруженные зависемости" 
+                    value={this.state.result.usedDependencies.length} 
+                    prefix={<Icon type="warning" />} />
+                </Col>
+                <Col className="text-center" span={12}>
+                  <Statistic title="Продублированно строк" 
+                    value={this.state.result.equalRows}  
+                    suffix={`/ ${this.state.result.docs[0].count_row}`} />
+                </Col>
+              </Row>
+              <Tabs defaultActiveKey="1">
+                <TabPane tab="Общая информация" key="1">
+                  <Table dataSource={this.state.result.docs} columns={this.state.result.columns} />
+                </TabPane>
+                <TabPane tab="Обнаруженные зависемости" key="2">
+                  <Table dataSource={this.state.result.docs} columns={this.state.result.columns} />
+                </TabPane>
+              </Tabs>
             </div>
           </>
         ) : ""}

@@ -25,7 +25,6 @@
 
     .main-chart {
         position: relative;
-        margin: 20px;
 
         h2 {
             position: absolute;
@@ -40,6 +39,10 @@
     .statistic {
         margin-top: 80px;
         font-size: 1.15em;
+
+        .ant-tabs-nav-wrap {
+            margin-top: 45px;
+        }
     }
 
     .send-btn {
