@@ -1,20 +1,47 @@
 .header {
-    background: #fff;
-    box-shadow: 0 2px 8px #f0f1f2;
-
+    background: #ECECEC;
+    box-shadow: 0 0px 8px #f0f1f2;
+    height: 250px;
+    box-shadow: 0 8px 27px #38383854;
+    
     .header-cover {
-        width: 960px;
+        display: flex;
+        justify-content: space-between;
+        width: 1168px;
         margin: auto;
+
+        .header__logo {
+            padding: 40px 0px;
+        }
 
         .header__menu {
             display: flex;
+            margin-left: auto;
 
             .menu__item {
-                height: 70px;
+                height: 250px;
+                font-size: 33px;
                 padding: 0px 30px;
                 display: flex;
                 align-items: center;
+
+                a {
+                    font-family: Segoe UI;
+                    text-transform: uppercase;
+                    color: #353535;
+
+                    &::before {
+                        content: "";
+                        border-bottom: 1px solid;
+                        widows: 10px;
+                    }
+                }
             }
+        }
+
+        .header__profile {
+            padding: 108px 15px;
+            float: right;
         }
     }
 }

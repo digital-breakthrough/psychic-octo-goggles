@@ -1,0 +1,149 @@
+.home-page {
+    .files-uploader {
+        display: grid;
+        overflow: hidden;
+        transition: 0.3s ease;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 25px;
+
+        &.closed {
+            height: 0px;
+        }
+
+        .ant-upload-drag-icon {
+            margin-bottom: 20px;
+        }
+
+        p.ant-upload-text {
+            font-size: 30px !important;
+        }
+
+        .ant-upload-drag-icon {
+            height: 120px;
+        }
+
+        .upload-file-status {
+            position: absolute;
+            right: 20px;
+            bottom: 5px;
+            font-size: 2em;
+            opacity: 0;
+            transition: .3s ease;
+
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+
+    .main-chart {
+        position: relative;
+
+        .chartjs-size-monitor {
+            height: 500px;
+            visibility: visible;
+            box-shadow: 0px 2px 14px #3F3E3E99;
+        }
+
+        h3 {
+            position: absolute;
+            right: 215px;
+            top: 50px;
+            font-weight: 700;
+            font-size: 40px;
+            color: #353535;
+        }
+
+        h2 {
+            position: absolute;
+            left: 640px;
+            top: 85px;
+            font-size: 170px;
+            color: #0ECC80;
+            font-weight: bold;
+        }
+    }
+
+    .statistic {
+        margin-top: 80px;
+        font-size: 1.15em;
+
+        .statistic-block {
+            margin-top: 120px;
+            height: 200px;
+            box-shadow: 0px 2px 14px #3F3E3E99;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            .column {
+                display: flex;
+                justify-content: space-between;
+
+                .column__main {
+                    width: 100%;
+                    padding: 45px;
+
+                    .title {
+                        font-size: 25px;
+                        font-weight: bold;
+                    }
+
+                    .more {
+                        font-size: 16px;
+                        margin-top: 10px;
+                    }
+                }
+
+                .column__num {
+                    width: 200px;
+                    display: flex;
+                    align-items: center;
+
+                    .num__shadow {
+                        font-size: 44px;
+                        color: #DE3A3A;
+                        padding: 15px 55px;
+                        background: #ECECEC;
+                        margin-right: 40px;
+                    }
+                }
+            }
+        }
+
+        div[role=tab] {
+            background: #969696;
+            margin: 0px;
+            color: #FFFFFF;
+            font-size: 18px;
+        }
+
+        div[aria-selected=true] {
+            background: #4ccc80;
+        }
+
+        .ant-tabs.ant-tabs-top.ant-tabs-line {
+            box-shadow: 0px 2px 14px #3F3E3E99;
+            margin: 60px 10px 0px;
+        }
+
+        .ant-table-wrapper {
+            padding: 0px 10px;
+        }
+    }
+
+    .send-btn {
+        padding: 25px;
+
+        button {
+            background: #DE3A3A;
+            width: 360px;
+            margin: 20px auto;
+            height: 75px;
+            font-size: 25px;
+            font-weight: 600;
+            font-family: Segoe UI;
+            border-radius: 10px;
+            border-color: #de3a3a;
+        }
+    }
+}
