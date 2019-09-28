@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Upload, Icon, message, Button } from 'antd';
+import { Upload, Icon, message, Button, Table } from 'antd';
 import axios from "axios"
 import "./index.scss";
 import { Doughnut } from 'react-chartjs-2';
@@ -16,7 +16,6 @@ const unicPercent = (per) => {
   return Math.abs(Math.round((100 - per) * 1000) / 1000);
 }
 
-
 class ComparePage extends Component {
   state = {
     files: [],
@@ -24,7 +23,8 @@ class ComparePage extends Component {
     isReady: false,
     result: {
       persent: 0,
-      params: []
+      docs: [],
+      columns: []
     }
   }
 
@@ -47,15 +47,6 @@ class ComparePage extends Component {
   }
 
   onStartAgain() {
-    // this.setState({
-    //   isReady: false,
-    //   isComparing: false,
-    //   result: {
-    //     persent: 0,
-    //     params: []
-    //   },
-    //   files: []
-    // });
     document.location.reload(true);
   }
 
@@ -78,7 +69,8 @@ class ComparePage extends Component {
               isReady: true,
               result: {
                 percent: res.data.percent,
-                params: res.data.params
+                docs: res.data.docs,
+                columns: res.data.columns
               }
             });
             message.success(`The comparison is successful`);
@@ -126,7 +118,7 @@ class ComparePage extends Component {
                   {
                     layout: {
                       padding: {
-                        right: 450
+                        right: 500
                       }
                     }
                   }
@@ -150,23 +142,7 @@ class ComparePage extends Component {
                 }} />
             </div>
             <div className="statistic">
-              {
-                this.state.result.params.map(param => {
-                  return (
-                    <div key={param.id}>
-                      <div className="column params">
-                        {param.name}
-                      </div>
-                      <div className="column">
-                        {param.value_1}
-                      </div>
-                      <div className="column">
-                        {param.value_2}
-                      </div>
-                    </div>
-                  )
-                })
-              }
+              <Table dataSource={this.state.result.docs} columns={this.state.result.columns} />
             </div>
           </>
         ) : ""}
