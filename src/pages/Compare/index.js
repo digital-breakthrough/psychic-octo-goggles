@@ -145,7 +145,7 @@ class ComparePage extends Component {
           this.state.isReady ? (
             <div className="send-btn text-right">
               <Button onClick={e => this.onStartAgain()}
-                type="primary">Начать cначала</Button>
+                type="primary" size="large">Начать cначала</Button>
             </div>
           ) : (
               <div className="send-btn text-center">
@@ -171,8 +171,8 @@ class ComparePage extends Component {
                 }
                 data={{
                   labels: [
-                    'Uniqueness',
-                    'Plagiarism'
+                    'Уникальность',
+                    'Плагиат'
                   ],
                   datasets: [{
                     data: [this.state.result.percent, 100 - this.state.result.percent],
