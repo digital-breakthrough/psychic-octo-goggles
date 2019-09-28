@@ -1,24 +1,27 @@
 import React, { Component } from "react";
 import { Upload, Icon, message, Button, Table } from 'antd';
 import axios from "axios"
+
 import "./index.scss";
+
 import { Doughnut } from 'react-chartjs-2';
 
 const { Dragger } = Upload;
 
 const props = {
   name: 'file',
-  multiple: true,
+  multiple: false,
   action: 'http://localhost:3000/api/v1/upload'
 };
 
 const unicPercent = (per) => {
-  return Math.abs(Math.round((100 - per) * 1000) / 1000);
+  return Math.abs(Math.round(per * 1000) / 1000);
 }
 
 class ComparePage extends Component {
   state = {
-    files: [],
+    fileForChecking: null,
+    existingCodeBase: null,
     isComparing: false,
     isReady: false,
     result: {
@@ -28,19 +31,39 @@ class ComparePage extends Component {
     }
   }
 
-  onChangeLoadFile(info) {
+  onChangeLoadFileForChecking(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
       this.setState({
-        files: [...this.state.files, {
+        fileForChecking: {
           name: info.file.response.name,
           path: info.file.response.path
-        }]
+        }
       });
-
     }
+
     if (status === 'done') {
       message.success(`${info.file.name} file uploaded successfully.`);
+
+    } else if (status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  }
+
+  onChangeLoadExistingFile(info) {
+    const { status } = info.file;
+    if (status !== 'uploading') {
+      this.setState({
+        existingCodeBase: {
+          name: info.file.response.name,
+          path: info.file.response.path
+        }
+      });
+    }
+
+    if (status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully.`);
+      
     } else if (status === 'error') {
       message.error(`${info.file.name} file upload failed.`);
     }
@@ -51,14 +74,18 @@ class ComparePage extends Component {
   }
 
   onStartCheckFiles() {
-    if (this.state.files.length < 2) {
-      message.error('Загружено недостаточно файлов');
+    if (!this.state.fileForChecking) {
+      message.error('Не загружен файл для проверки');
+    } else 
+    if (!this.state.existingCodeBase) {
+      message.error("Не загружена кодовая база для сверки")
     } else {
       this.setState({
         isComparing: true
       });
       axios.post('http://localhost:3000/api/v1/files/compare', {
-        files: this.state.files.slice(-2)
+        fileForChecking: this.state.fileForChecking, 
+        existingCodeBase: this.state.existingCodeBase
       })
         .then(res => {
           this.setState({
@@ -85,13 +112,22 @@ class ComparePage extends Component {
     return (
       <main className="compare-page main">
         <div className={`files-uploader ${this.state.isReady ? 'closed' : ''}`}>
-          <Dragger {...props} onChange={info => this.onChangeLoadFile(info)}>
+          <Dragger {...props} onChange={info => this.onChangeLoadFileForChecking(info)}>
             <p className="ant-upload-drag-icon">
               <Icon type="inbox" />
             </p>
-            <p className="ant-upload-text">Нажмите для загрузки файлов для сравнения</p>
+            <p className="ant-upload-text">Нажмите для загрузки файла</p>
             <p className="ant-upload-hint">
-              Результатом работы сервиса является сравнительный анализ документов
+              Файл содержание которого будет проверяться
+            </p>
+          </Dragger>
+          <Dragger {...props} onChange={info => this.onChangeLoadExistingFile(info)}>
+            <p className="ant-upload-drag-icon">
+              <Icon type="inbox" />
+            </p>
+            <p className="ant-upload-text">Нажмите для загрузки файла</p>
+            <p className="ant-upload-hint">
+              Файл, который будет служить исходной кодовой базой
             </p>
           </Dragger>
         </div>
@@ -129,7 +165,7 @@ class ComparePage extends Component {
                     'Plagiarism'
                   ],
                   datasets: [{
-                    data: [100 - this.state.result.percent, this.state.result.percent],
+                    data: [this.state.result.percent, 100 - this.state.result.percent],
                     backgroundColor: [
                       "#77f162",
                       '#FF6384'

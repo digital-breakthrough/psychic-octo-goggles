@@ -1,7 +1,9 @@
 .compare-page {
     .files-uploader {
+        display: grid;
         overflow: hidden;
         transition: 0.3s ease;
+        grid-template-columns: 1fr 1fr;
 
         &.closed {
             height: 0px;
