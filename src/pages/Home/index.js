@@ -30,7 +30,8 @@ class HomePage extends Component {
       docs: [],
       columns: [],
       equalRows: 0,
-      usedDependencies: []
+      usedDependencies: [],
+      matches: []
     }
   }
 
@@ -97,6 +98,7 @@ class HomePage extends Component {
                   percent: res.data.percent,
                   docs: res.data.docs,
                   columns: res.data.columns,
+                  matches: res.data.matches,
                   equalRows: res.data.equalRows,
                   usedDependencies: res.data.usedDependencies
                 }
@@ -228,6 +230,21 @@ class HomePage extends Component {
                     dataIndex: "source",
                     key: "source"
                   }]} />
+                </TabPane>
+                <TabPane tab="Совпадение строк" key="3">
+                  <Table dataSource={this.state.result.matches} columns={[{
+                      title: '№ строки пр. файла',
+                      dataIndex: "checkFileRowId",
+                      key: "checkFileRowId"
+                    }, {
+                      title: '№ строки в код. базе',
+                      dataIndex: "existingFileRowId",
+                      key: "existingFileRowId"
+                    }, {
+                      title: "Найденная совпадающая строка",
+                      dataIndex: "row",
+                      key: "row"
+                    }]} />      
                 </TabPane>
               </Tabs>
             </div>
