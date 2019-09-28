@@ -8,9 +8,24 @@
         }
     }
 
-    .statistic {
+    .main-chart {
+        margin: 20px;
 
-        & > div {
+        h2 {
+            position: absolute;
+            left: 670px;
+            top: 300px;
+            font-weight: 700;
+            font-size: 3.5em;
+            color: #77f162;
+        }
+    }
+
+    .statistic {
+        margin-top: 80px;
+        font-size: 1.15em;
+        
+        &>div {
             display: grid;
             grid-template-columns: 200px 1fr 1fr;
             padding: 0px;
@@ -22,7 +37,6 @@
     }
 
     .send-btn {
-        text-align: center;
         padding: 25px;
     }
-} 
+}

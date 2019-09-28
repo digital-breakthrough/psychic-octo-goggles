@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Upload, Icon, message, Button } from 'antd';
 import axios from "axios"
 import "./index.scss";
+import { Doughnut } from 'react-chartjs-2';
 
 const { Dragger } = Upload;
 
@@ -10,6 +11,11 @@ const props = {
   multiple: true,
   action: 'http://localhost:3000/api/v1/upload'
 };
+
+const unicPercent = (per) => {
+  return Math.abs(Math.round((100 - per) * 1000) / 1000);
+}
+
 
 class ComparePage extends Component {
   state = {
@@ -41,15 +47,16 @@ class ComparePage extends Component {
   }
 
   onStartAgain() {
-    this.setState({
-      isReady: false,
-      isComparing: false,
-      result: {
-        persent: 0,
-        params: []
-      },
-      files: []
-    })
+    // this.setState({
+    //   isReady: false,
+    //   isComparing: false,
+    //   result: {
+    //     persent: 0,
+    //     params: []
+    //   },
+    //   files: []
+    // });
+    document.location.reload(true);
   }
 
   onStartCheckFiles() {
@@ -96,38 +103,72 @@ class ComparePage extends Component {
             </p>
           </Dragger>
         </div>
-        <div className="send-btn">
-          {
-            this.state.isReady ? (
+        {
+          this.state.isReady ? (
+            <div className="send-btn text-right">
               <Button onClick={e => this.onStartAgain()}
                 type="primary">Начать cначала</Button>
-            ) : (
-              <Button onClick={e => this.onStartCheckFiles()}
-              loading={this.state.isComparing}
-              type="primary">Начать сравнение</Button>
+            </div>
+          ) : (
+              <div className="send-btn text-center">
+                <Button onClick={e => this.onStartCheckFiles()}
+                  loading={this.state.isComparing}
+                  type="primary">Начать сравнение</Button>
+              </div>
             )
-          }
-        </div>
+        }
         {this.state.isReady ? (
-          <div className="statistic">
-            {
-              this.state.result.params.map(param => {
-                return (
-                  <div key={param.id}>
-                    <div className="column params">
-                      {param.name}
+          <>
+            <div className="main-chart">
+              <h2>{`${unicPercent(this.state.result.percent)} %`}</h2>
+              <Doughnut width={500}
+                options={
+                  {
+                    layout: {
+                      padding: {
+                        right: 450
+                      }
+                    }
+                  }
+                }
+                data={{
+                  labels: [
+                    'Uniqueness',
+                    'Plagiarism'
+                  ],
+                  datasets: [{
+                    data: [100 - this.state.result.percent, this.state.result.percent],
+                    backgroundColor: [
+                      "#77f162",
+                      '#FF6384'
+                    ],
+                    hoverBackgroundColor: [
+                      "#77f162",
+                      '#FF6384'
+                    ]
+                  }]
+                }} />
+            </div>
+            <div className="statistic">
+              {
+                this.state.result.params.map(param => {
+                  return (
+                    <div key={param.id}>
+                      <div className="column params">
+                        {param.name}
+                      </div>
+                      <div className="column">
+                        {param.value_1}
+                      </div>
+                      <div className="column">
+                        {param.value_2}
+                      </div>
                     </div>
-                    <div className="column">
-                      {param.value_1}
-                    </div>
-                    <div className="column">
-                      {param.value_2}
-                    </div>
-                  </div>
-                )
-              })
-            }
-          </div>
+                  )
+                })
+              }
+            </div>
+          </>
         ) : ""}
       </main>)
   }
