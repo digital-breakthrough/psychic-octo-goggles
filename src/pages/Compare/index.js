@@ -63,7 +63,7 @@ class ComparePage extends Component {
 
     if (status === 'done') {
       message.success(`${info.file.name} file uploaded successfully.`);
-      
+
     } else if (status === 'error') {
       message.error(`${info.file.name} file upload failed.`);
     }
@@ -76,35 +76,35 @@ class ComparePage extends Component {
   onStartCheckFiles() {
     if (!this.state.fileForChecking) {
       message.error('Не загружен файл для проверки');
-    } else 
-    if (!this.state.existingCodeBase) {
-      message.error("Не загружена кодовая база для сверки")
-    } else {
-      this.setState({
-        isComparing: true
-      });
-      axios.post('http://localhost:3000/api/v1/files/compare', {
-        fileForChecking: this.state.fileForChecking, 
-        existingCodeBase: this.state.existingCodeBase
-      })
-        .then(res => {
-          this.setState({
-            isComparing: false
-          });
-          if (res.data.success) {
-            this.setState({
-              isReady: true,
-              result: {
-                percent: res.data.percent,
-                docs: res.data.docs,
-                columns: res.data.columns
-              }
-            });
-            message.success(`The comparison is successful`);
-          }
+    } else
+      if (!this.state.existingCodeBase) {
+        message.error("Не загружена кодовая база для сверки")
+      } else {
+        this.setState({
+          isComparing: true
+        });
+        axios.post('http://localhost:3000/api/v1/files/compare', {
+          fileForChecking: this.state.fileForChecking,
+          existingCodeBase: this.state.existingCodeBase
         })
-        .catch(error => console.error('Ошибка:', error));
-    }
+          .then(res => {
+            this.setState({
+              isComparing: false
+            });
+            if (res.data.success) {
+              this.setState({
+                isReady: true,
+                result: {
+                  percent: res.data.percent,
+                  docs: res.data.docs,
+                  columns: res.data.columns
+                }
+              });
+              message.success(`The comparison is successful`);
+            }
+          })
+          .catch(error => console.error('Ошибка:', error));
+      }
   }
 
   render() {
@@ -112,7 +112,9 @@ class ComparePage extends Component {
     return (
       <main className="compare-page main">
         <div className={`files-uploader ${this.state.isReady ? 'closed' : ''}`}>
-          <Dragger {...props} onChange={info => this.onChangeLoadFileForChecking(info)}>
+          <Dragger {...props}
+            onChange={info => this.onChangeLoadFileForChecking(info)}
+            showUploadList={false}>
             <p className="ant-upload-drag-icon">
               <Icon type="inbox" />
             </p>
@@ -120,8 +122,13 @@ class ComparePage extends Component {
             <p className="ant-upload-hint">
               Файл содержание которого будет проверяться
             </p>
+            <span className={`upload-file-status ${this.state.fileForChecking ? "active": ""}`}>
+              <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+            </span>
           </Dragger>
-          <Dragger {...props} onChange={info => this.onChangeLoadExistingFile(info)}>
+          <Dragger {...props}
+            onChange={info => this.onChangeLoadExistingFile(info)}
+            showUploadList={false}>
             <p className="ant-upload-drag-icon">
               <Icon type="inbox" />
             </p>
@@ -129,6 +136,9 @@ class ComparePage extends Component {
             <p className="ant-upload-hint">
               Файл, который будет служить исходной кодовой базой
             </p>
+            <span className={`upload-file-status ${this.state.existingCodeBase ? "active": ""}`}>
+              <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+            </span>
           </Dragger>
         </div>
         {

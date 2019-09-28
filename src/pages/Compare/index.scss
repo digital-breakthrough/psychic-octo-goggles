@@ -8,6 +8,19 @@
         &.closed {
             height: 0px;
         }
+
+        .upload-file-status {
+            position: absolute;
+            right: 20px;
+            bottom: 5px;
+            font-size: 2em;
+            opacity: 0;
+            transition: .3s ease;
+
+            &.active {
+                opacity: 1;
+            }
+        }
     }
 
     .main-chart {
