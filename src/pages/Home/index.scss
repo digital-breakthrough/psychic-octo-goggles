@@ -144,6 +144,11 @@
             font-family: Segoe UI;
             border-radius: 10px;
             border-color: #de3a3a;
+            transition: .3 ease;
+
+            &:hover, &:focus {
+                box-shadow: 0px 2px 14px #3F3E3E99;
+            }
         }
     }
 }

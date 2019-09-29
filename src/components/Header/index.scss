@@ -1,7 +1,7 @@
 .header {
     background: #ECECEC;
     box-shadow: 0 0px 8px #f0f1f2;
-    height: 250px;
+    height: 200px;
     box-shadow: 0 8px 27px #38383854;
     
     .header-cover {
@@ -11,7 +11,12 @@
         margin: auto;
 
         .header__logo {
-            padding: 40px 0px;
+            cursor: pointer;
+            
+            img {
+                height: 120px;
+                margin-top: 30px;
+            }
         }
 
         .header__menu {
@@ -19,8 +24,8 @@
             margin-left: auto;
 
             .menu__item {
-                height: 250px;
-                font-size: 33px;
+                height: 200px;
+                font-size: 28px;
                 padding: 0px 30px;
                 display: flex;
                 align-items: center;
@@ -40,7 +45,7 @@
         }
 
         .header__profile {
-            padding: 108px 15px;
+            padding: 80px 15px;
             float: right;
         }
     }
