@@ -158,6 +158,11 @@ class HomePage extends Component {
             <div className="main-chart">
               <h3>Уникальность</h3>
               <h2>{`${unicPercent(this.state.result.percent)}%`}</h2>
+              <div className="download-report" >
+                <a target="_blank" href="http://localhost:3000/static/report.docx">
+                  Загрузить отчет
+                </a>
+              </div>
               <Doughnut width={400}
                 options={
                   {
@@ -205,7 +210,7 @@ class HomePage extends Component {
                 <div className="column">
                   <div className="column__main">
                     <div className="title">
-                      Обнаруженные зависимости
+                      Количество совпадений строк
                     </div>
                     <div className="more">
                       Подробнее

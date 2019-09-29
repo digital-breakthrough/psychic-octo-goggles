@@ -146,9 +146,38 @@
             border-color: #de3a3a;
             transition: .3 ease;
 
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
                 box-shadow: 0px 2px 14px #3F3E3E99;
             }
+        }
+    }
+}
+
+.download-report {
+    position: absolute;
+    top: 320px;
+    right: 160px;
+
+    a {
+        display: flex;
+        background: #DE3A3A;
+        width: 360px;
+        margin: 20px auto;
+        height: 75px;
+        font-size: 25px;
+        font-weight: 600;
+        font-family: Segoe UI;
+        border-radius: 10px;
+        border-color: #de3a3a;
+        transition: .3 ease;
+        color: #fff;
+        align-items: center;
+        justify-content: center;
+
+        &:hover,
+        &:focus {
+            box-shadow: 0px 2px 14px #3F3E3E99;
         }
     }
 }
